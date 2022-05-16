@@ -1,0 +1,26 @@
+name: Code Linting
+
+on:
+  pull_request
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: |
+        pip install black==21.8b0
+        pip install pylint==2.10.2
+    - name: Run black on /dags directory
+      run: |
+        black dags
+    - name: Run pylint on /dags directory
+      run: |
+        pylint dags
